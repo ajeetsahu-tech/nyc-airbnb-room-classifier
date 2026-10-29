@@ -1,0 +1,11 @@
+
+# Ignore trained machine learning model
+Model_pipeline.pkl
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore virtual environment
+.venv/
+venv/

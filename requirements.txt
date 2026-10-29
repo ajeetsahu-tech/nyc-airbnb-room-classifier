@@ -1,0 +1,10 @@
+# Backend (FastAPI) dependencies. The frontend is plain HTML/CSS/JS and needs none.
+# Tip: install the same scikit-learn version you used when you saved Model_pipeline.pkl,
+# e.g. scikit-learn==1.x.x, otherwise joblib.load may warn or fail.
+fastapi
+uvicorn[standard]
+pandas
+scikit-learn
+joblib
+pydantic
+numpy

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Room Type Predictor · NYC listings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="skyline" aria-hidden="true" id="skyline"></div>
+
+  <header class="top">
+    <div>
+      <h1>What kind of room is this listing?</h1>
+      <p class="sub">Describe an NYC listing and the model predicts whether it is an entire home, a private room or a shared room.</p>
+    </div>
+    <div class="api">
+      <span id="statusDot" class="dot"></span>
+      <span id="statusText">Checking API…</span>
+      <input id="apiUrl" value="" placeholder="Same origin" aria-label="API URL" spellcheck="false">
+    </div>
+  </header>
+
+  <main class="layout">
+    <form id="form" class="panel" novalidate>
+      <div class="presets">
+        <span>Try an example</span>
+        <button type="button" class="chip" data-preset="midtown">Midtown studio</button>
+        <button type="button" class="chip" data-preset="brooklyn">Brooklyn room</button>
+        <button type="button" class="chip" data-preset="queens">Budget in Queens</button>
+      </div>
+
+      <fieldset>
+        <legend>Where is it?</legend>
+        <div class="segment" id="boroughs" role="radiogroup" aria-label="Borough">
+          <button type="button" class="on" data-v="Manhattan" role="radio">Manhattan</button>
+          <button type="button" data-v="Brooklyn" role="radio">Brooklyn</button>
+          <button type="button" data-v="Queens" role="radio">Queens</button>
+          <button type="button" data-v="Bronx" role="radio">Bronx</button>
+          <button type="button" data-v="Staten Island" role="radio">Staten Island</button>
+        </div>
+        <div class="grid">
+          <label class="wide">Neighbourhood
+            <input id="neighbourhood" list="hoods" value="Midtown" autocomplete="off" required>
+            <datalist id="hoods"></datalist>
+          </label>
+          <label>Latitude <input id="latitude" type="number" step="any" min="-90" max="90" required></label>
+          <label>Longitude <input id="longitude" type="number" step="any" min="-180" max="180" required></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Price and availability</legend>
+        <label class="range">Price per night
+          <output id="priceOut">$150</output>
+          <input id="price" type="range" min="10" max="1000" step="5" value="150">
+        </label>
+        <label class="range">Minimum nights
+          <output id="minimum_nightsOut">3 nights</output>
+          <input id="minimum_nights" type="range" min="1" max="365" value="3">
+        </label>
+        <label class="range">Days available this year
+          <output id="availability_365Out">180 days</output>
+          <input id="availability_365" type="range" min="0" max="365" value="180">
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Reviews and host</legend>
+        <div class="grid three">
+          <label>Total reviews <input id="number_of_reviews" type="number" min="0" step="1" value="20" required></label>
+          <label>Reviews per month <input id="reviews_per_month" type="number" min="0" step="0.01" value="0.8" required></label>
+          <label>Host's listings <input id="calculated_host_listings_count" type="number" min="0" step="1" value="1" required></label>
+        </div>
+      </fieldset>
+
+      <p id="error" class="error" role="alert" hidden></p>
+      <button id="submit" class="cta" type="submit"><span class="label">Predict room type</span><span class="spin"></span></button>
+    </form>
+
+    <aside class="panel result" id="result" aria-live="polite">
+      <div class="empty" id="empty">
+        <div class="tag ghost"><i></i><b>?</b></div>
+        <h2>Your prediction shows up here</h2>
+        <p>Fill in the listing details and choose Predict room type.</p>
+      </div>
+
+      <div class="filled" id="filled" hidden>
+        <div class="hang">
+          <div class="tag" id="tag"><i></i><b id="roomIcon"></b></div>
+        </div>
+        <h2 id="roomName"></h2>
+        <p class="conf"><span id="confNum">0</span>% confident</p>
+        <div class="bars" id="bars"></div>
+        <p class="note" id="note"></p>
+      </div>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
