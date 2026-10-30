@@ -2,6 +2,12 @@
 
 A FastAPI app with a browser interface that predicts an NYC Airbnb listing's room type.
 
+# Types of Room
+
+1. Entire home/apt
+2. Private room
+3. Shared room
+
 ## Requirements
 
 - Python 3.10 or newer
